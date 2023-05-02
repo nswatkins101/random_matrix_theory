@@ -1,0 +1,4 @@
+#!/bin/bash
+#compiling with GSL and NLopt
+gcc -Wno-discarded-qualifiers -Wno-int-conversion -c main_03_25.c array_utils.c kemeny_utils.c graph_alloc_utils.c graph_utils.c
+gcc main.o array_utils.o kemeny_utils.o graph_alloc_utils.o graph_utils.o -o main.exe -lgsl -lgslcblas -lm

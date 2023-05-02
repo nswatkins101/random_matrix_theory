@@ -1,0 +1,6 @@
+07/28/2021
+
+Using C and GSL to compute eigenvalues for inverses quickly, for numerically testing random matrix theory results. First, I will write a program to calculate the empirical limiting distribution of the spectrum
+of a matrix using n~1000. Going to create a loop in which I generate a random matrix according to some fixed function, calculate the eigenvalues with GSL, bin the eigenvalues, add that histogram to some 
+total histogram, then at the end of the loop normalize the histogram and write it to a file. I am hoping to eventually introduce some plotting functionality to the C code, but for now, Mathematica is much
+more flexible with plotting styles. 

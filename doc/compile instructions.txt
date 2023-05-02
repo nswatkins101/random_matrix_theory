@@ -1,0 +1,63 @@
+compiling with GSL
+$ gcc -Wall -I/usr/local/include -c example.c
+$ gcc -L/usr/local/lib example.o -lgsl -lgslcblas -lm
+
+compiling with NLopt
+$ gcc example.o -lnlopt -lm
+
+using them together would require
+$ gcc example.o -lnlopt -lgsl -lgslcblas -lm
+
+$echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/loca/lib64/' >> ~/.bashrc
+
+# the compiler: gcc for C program, define as g++ for C++
+CC = gcc
+
+#compiler flags:
+# 	-g		adds debugging information to the executable file
+# 	-Wall	turns on most, but not all, compiler warnings
+CFLAGS = -g -Wall
+
+# defines any directories containing header files other than /usr/include
+INCLUDES = -I/usr/local/include -I../include
+
+# define library paths in addition to /usr/lib
+LFLAGS = -L/usr/local/include -L../lib
+
+# define any libraries to link into executable
+#		-lgsl			links GSL executables
+#		-lgslcblas	links GSL Cblas executabes for Cblas operations
+#		-lm 			links system math
+LIBS = -lgsl -lgslcblas -lm
+
+# define the C source files
+SRCS = main.c array_utils.c matrix_utils.c matrix_calc_utils.c graph_alloc_utils.c graph_utils.c 
+
+# define the C object files
+OBJS = $(SRCS:.c=.o)
+
+# define the executable file
+MAIN = main.exe
+
+.PHONY: depend clean
+
+all: $(MAIN)
+	@echo main has been compiled
+	
+$(MAIN): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+	
+# this is a suffix replacement rule for building ,o's from .c's 
+# it uses automatic variables $<: the name of the prerequisite of
+# the rule (a .c file) and $@: the name of the target of the rule (a .o file)
+# (see the gnu make manual section about automatic variables)
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	
+clean:
+	$(RM) *.o *~ $(MAIN)
+
+depend: $(SRCS)
+	makedepend $(INCLUDES) $^
+	
+# DO NOT DELETE THIS LINE -- make depend needs it

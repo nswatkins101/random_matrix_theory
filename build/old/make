@@ -1,0 +1,5 @@
+$ cd ../src
+$ gcc -Wall -c matrix_utils.c matrix_calc_utils.c graph_alloc_utils.c graph_utils.c array_utils.c kemeny_utils.c -o ../obj/utils.o -I"../include"
+$ gcc -Wall -c main.c -o ../obj/main.o
+$ cdd ../obj
+$ gcc  main.o utils.o -lnlopt -lgsl -lgslcblas -lm
